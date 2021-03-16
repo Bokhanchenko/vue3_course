@@ -1,16 +1,22 @@
 <template>
-  <router-link :to="to" class="button is-rounded is-link">
+  <router-link
+    :to="{ name: 'post.edit', params: post.id }"
+    class="button is-rounded is-link"
+  >
     <i class="fas fa-edit" />
   </router-link>
+
   <div>Post title is: {{ post.title }}</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useRoute } from "vue-router";
-import { useStore } from "./store";
+import { useStore } from "../service/store";
 
 export default defineComponent({
+  name: 'PostViewer',
+
   async setup() {
     const route = useRoute()
     const store = useStore()
@@ -20,11 +26,8 @@ export default defineComponent({
       await store.fetchPosts()
     }
 
-    const post = store.getState().posts.all[id]
-
     return {
-      post,
-      to: `/posts/${post.id}/edit`
+      post: store.getState().posts.all[id],
     }
   }
 })

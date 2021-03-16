@@ -1,9 +1,8 @@
 import { mount } from '@vue/test-utils'
-import Home from './Home.vue'
-import { nextTick } from 'vue'
+import Home from '../HomePage.vue'
 import flushPromises from 'flush-promises'
-import * as mockData from './mocks'
-import { createStore } from './store'
+import * as mockData from '../service/mocks'
+import { createStore } from '../service/store'
 
 jest.mock('axios', () => ({
   get: (url: string) => ({

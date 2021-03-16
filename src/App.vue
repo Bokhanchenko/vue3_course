@@ -16,15 +16,16 @@
 </template>
 
 <script lang="ts">
-import { required, length, validate, Status } from './validators'
+import { required, length, validate, Status } from './service/validators'
 import { defineComponent, computed, ref } from 'vue'
-import NavBar from './NavBar.vue'
-import FormInput from './FormInput.vue'
-import { useModal } from './useModal'
-import { provideStore } from './store'
+import NavBar from './components/NavBar.vue'
+import FormInput from './components/FormInput.vue'
+import { useModal } from './service/useModal'
+import { provideStore } from './service/store'
 
 export default defineComponent({
   name: 'App',
+
   components: {
     NavBar,
     FormInput
@@ -32,6 +33,7 @@ export default defineComponent({
 
   setup () {
     provideStore()
+
     const modal = useModal()
     const username = ref('username')
     const usernameStatus = computed<Status>(() => {

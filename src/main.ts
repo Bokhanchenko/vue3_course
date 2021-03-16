@@ -1,10 +1,10 @@
 import { createApp } from 'vue'
 import axios from 'axios'
-import * as mockData from './mocks'
+import * as mockData from './service/mocks'
 import 'highlight.js/styles/solarized-dark.css'
 import random from 'lodash/random'
 
-import { router } from './router'
+import { router } from './service/router'
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
 // @ts-ignore

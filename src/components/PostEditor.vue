@@ -1,13 +1,21 @@
 <template>
-  <div>Post Editor</div>
+  <div>
+    Post Editor
+
+    <router-link :to="{ name: 'post.edit', params: { id: post.id } }">
+      Post
+    </router-link>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useStore } from "./store";
+import { useStore } from "../service/store";
 
 export default defineComponent({
+  name: 'PostEditor',
+
   async setup() {
     const route = useRoute()
     const router = useRouter()
@@ -22,12 +30,11 @@ export default defineComponent({
     const canEdit = post.authorId === parseInt(store.getState().authors.currentUserId!, 10)
 
     if (!canEdit) {
-      router.push('/')
+      return router.push({ name: 'home' })
     }
 
     return {
       post,
-      to: `/posts/${post.id}/edit`
     }
   }
 })

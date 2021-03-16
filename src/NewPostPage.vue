@@ -4,14 +4,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import PostWriter from './PostWriter.vue'
-import { Post } from './types'
-import moment=require('moment')
-import { useStore } from './store'
 import { useRouter } from 'vue-router'
+import { useStore } from './service/store'
+import { Post } from './service/types'
+import moment from 'moment'
+
+import PostWriter from './components/PostWriter.vue'
 
 export default defineComponent({
-  name: 'NewPost',
+  name: 'NewPostPage',
 
   components: {
     PostWriter
@@ -30,14 +31,12 @@ export default defineComponent({
       authorId: parseInt(store.getState().authors.currentUserId!, 10)
     }
 
-    const save = async (post: Post) => {
-      await store.createPost(post)
-      router.push('/')
-    }
-
     return {
       post,
-      save
+      save: async (post: Post) => {
+        await store.createPost(post)
+        return router.push('/')
+      }
     }
   }
 })

@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
-import PostWriter from './PostWriter.vue'
-import { basePost } from './mocks'
+import PostWriter from '../components/PostWriter.vue'
+import { basePost } from '../service/mocks'
 
 describe('PostWriter', () => {
   it('composes a post and emits the new data', (done) => {

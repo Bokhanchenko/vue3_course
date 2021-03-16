@@ -5,27 +5,22 @@
     </template>
 
     <template #fallback>
-      <div class="columns">
-        <div class="column is-one-third" />
-        <div class="column is-one-third">
-          <Progress />
-        </div>
-        <div class="column is-one-third" />
-      </div>
+      <Progress />
     </template>
   </Suspense>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Timeline from './Timeline.vue'
-import Progress from './Progress.vue'
+import Timeline from './components/Timeline.vue'
+import Progress from './components/Progress.vue'
 
 export default defineComponent({
+  name: 'HomePage',
+
   components: {
     Timeline,
     Progress
   },
-  name: 'Home'
 })
 </script>

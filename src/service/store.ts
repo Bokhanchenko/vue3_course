@@ -20,8 +20,6 @@ interface State {
   posts: PostsState
 }
 
-import { todayPost, thisWeek, thisMonth } from './mocks'
-
 const initialAuthorsState = (): AuthorsState => ({
   all: {},
   ids: [],
@@ -30,10 +28,8 @@ const initialAuthorsState = (): AuthorsState => ({
 })
 
 const initialPostsState = (): PostsState => ({
-  all: {
-  },
-  ids: [
-  ],
+  all: {},
+  ids: [],
   loaded: false
 })
 
@@ -55,20 +51,22 @@ class Store {
 
   async createUser(user: User) {
     const response = await axios.post<Author>('/users', user)
+
     this.state.authors.all[response.data.id] = response.data
     this.state.authors.ids.push(response.data.id.toString())
     this.state.authors.currentUserId = response.data.id.toString()
-    console.log(this.state)
   }
 
   async createPost(post: Post) {
     const response = await axios.post<Post>('/posts', post)
+
     this.state.posts.all[response.data.id] = response.data
     this.state.posts.ids.push(response.data.id.toString())
   }
 
   async fetchPosts() {
     const response = await axios.get<Post[]>('/posts')
+
     for (const post of response.data) {
       if (!this.state.posts.ids.includes(post.id.toString())) {
         this.state.posts.ids.push(post.id.toString())
@@ -82,17 +80,9 @@ class Store {
 }
 
 export const store = new Store(initialState())
+
 store.getState()
 
-export const provideStore = () => {
-  provide('store', store)
-}
-
-export const createStore = () => {
-  return new Store(initialState())
-}
-
-export const useStore = (): Store => {
-  const store = inject<Store>('store')
-  return store
-}
+export const provideStore = () => provide('store', store)
+export const createStore = () => new Store(initialState())
+export const useStore = (): Store => inject<Store>('store')

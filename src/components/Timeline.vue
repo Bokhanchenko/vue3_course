@@ -16,12 +16,14 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
 import moment from 'moment'
+import { Period, Post } from '../service/types'
+import { useStore } from '../service/store'
+
 import TimelinePost from './TimelinePost.vue'
 
-import { Period, Post } from './types'
-import { useStore } from './store'
-
 export default defineComponent({
+  name: 'Timeline',
+
   components: {
     TimelinePost
   },
@@ -31,6 +33,7 @@ export default defineComponent({
     const selectedPeriod = ref<Period>('today')
 
     const store = useStore()
+
     if (!store.getState().posts.loaded) {
       await store.fetchPosts()
     }
@@ -46,16 +49,12 @@ export default defineComponent({
           post.created.isAfter(moment().subtract(1, 'day'))
         ) {
           return true
-        }
-
-        if (
+        } else if (
           selectedPeriod.value === 'this week' &&
           post.created.isAfter(moment().subtract(7, 'day'))
         ) {
           return true
-        }
-
-        if (
+        } else if (
           selectedPeriod.value === 'this month' &&
           post.created.isAfter(moment().subtract(1, 'month'))
         ) {
@@ -66,15 +65,14 @@ export default defineComponent({
       })
     )
 
-    const setPeriod = (period: Period) => {
-      selectedPeriod.value = period
-    }
-
     return {
       periods,
       selectedPeriod,
-      setPeriod,
-      posts
+      posts,
+
+      setPeriod: (period: Period) => {
+        selectedPeriod.value = period
+      },
     }
   }
 })

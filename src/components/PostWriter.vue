@@ -5,7 +5,12 @@
         <div class="field">
           <div class="label">Post Title</div>
           <div class="control">
-            <input v-model="title" type="text" class="input" data-test="post-title" />
+            <input
+              v-model="title"
+              type="text"
+              class="input"
+              data-test="post-title"
+            />
             {{ title }}
           </div>
         </div>
@@ -14,8 +19,15 @@
 
     <div class="columns">
       <div class="column is-one-half">
-        <div contenteditable id="markdown" ref="contentEditable" @input="handleEdit" data-test="markdown" />
+        <div
+          contenteditable
+          id="markdown"
+          ref="contentEditable"
+          data-test="markdown"
+          @input="handleEdit"
+        />
       </div>
+
       <div class="column is-one-half">
         <div v-html="html" />
       </div>
@@ -23,7 +35,11 @@
 
     <div class="columns">
       <div class="column">
-        <button @click="submit" class="button is-primary is-pulled-right" data-test="submit-post">
+        <button
+          class="button is-primary is-pulled-right"
+          data-test="submit-post"
+          @click="submit"
+        >
           Submit
         </button>
       </div>
@@ -33,7 +49,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, watch } from 'vue'
-import { Post } from './types'
+import { Post } from '../service/types'
 import { parse, MarkedOptions } from 'marked'
 import { highlightAuto } from 'highlight.js'
 import debounce from 'lodash/debounce'
@@ -42,10 +58,7 @@ export default defineComponent({
   name: 'PostWriter',
 
   props: {
-    post: {
-      type: Object as () => Post,
-      required: true
-    }
+    post: { type: Object as () => Post, required: true }
   },
 
   setup(props, ctx) {
@@ -56,20 +69,6 @@ export default defineComponent({
 
     const options: MarkedOptions = {
       highlight: (code: string) => highlightAuto(code).value
-    }
-
-    const handleEdit = () => {
-      markdown.value = contentEditable.value.innerText
-    }
-
-    const submit = () => {
-      const post: Post = {
-        ...props.post,
-        title: title.value,
-        markdown: markdown.value,
-        html: html.value,
-      }
-      ctx.emit('save', post)
     }
 
     const update = (value: string) => {
@@ -83,12 +82,23 @@ export default defineComponent({
     })
 
     return {
-      submit,
       html,
       title,
       contentEditable,
-      handleEdit,
-      markdown
+      markdown,
+      handleEdit: () => {
+        markdown.value = contentEditable.value.innerText
+      },
+      submit: () => {
+        const post: Post = {
+          ...props.post,
+          title: title.value,
+          markdown: markdown.value,
+          html: html.value,
+        }
+
+        ctx.emit('save', post)
+      }
     }
   }
 })

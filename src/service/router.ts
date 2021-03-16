@@ -1,36 +1,36 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Home from './Home.vue'
-import NewPost from './NewPost.vue'
-import EditPost from './EditPost.vue'
-import ShowPost from './ShowPost.vue'
+import HomePage from '../HomePage.vue'
+import NewPostPage from '../NewPostPage.vue'
+import EditPostPage from '../EditPostPage.vue'
+import ShowPostPage from '../ShowPostPage.vue'
 import { store } from './store'
 
 export const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      name: 'Home',
+      name: 'home',
       path: '/',
-      component: Home
+      component: HomePage
     },
     {
-      name: 'ShowPost',
+      name: 'post',
       path: '/posts/:id',
-      component: ShowPost
+      component: ShowPostPage
     },
     {
-      name: 'NewPost',
+      name: 'post.new',
       path: '/posts/new',
-      component: NewPost,
+      component: NewPostPage,
       meta: {
         requiresAuth: true
       }
     },
     {
-      name: 'EditPost',
+      name: 'post.edit',
       path: '/posts/:id/edit',
-      component: EditPost,
+      component: EditPostPage,
       meta: {
         requiresAuth: true
       }
@@ -41,7 +41,7 @@ export const router = createRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !store.getState().authors.currentUserId) {
     next({
-      name: 'Home'
+      name: 'home'
     })
   } else {
     next()
