@@ -1,6 +1,7 @@
 <template>
   <router-link
-    :to="{ name: 'post.edit', params: post.id }"
+    v-if="canEdit"
+    :to="{ name: 'post.edit', params: { id: post.id }}"
     class="button is-rounded is-link"
   >
     <i class="fas fa-edit" />
@@ -20,14 +21,17 @@ export default defineComponent({
   async setup() {
     const route = useRoute()
     const store = useStore()
-    const id = route.params.id as string
 
     if (!store.getState().posts.loaded) {
       await store.fetchPosts()
     }
 
+    const id = route.params.id as string
+    const post = store.getState().posts.all[id]
+
     return {
-      post: store.getState().posts.all[id],
+      canEdit: post.authorId === Number.parseInt(store.getState().authors.currentUserId!, 10),
+      post
     }
   }
 })

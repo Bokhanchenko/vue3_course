@@ -21,19 +21,18 @@ axios.get = async (url: string) => {
 axios.post = async (url: string, payload: Post) => {
   if (url === '/posts') {
     await delay(1000)
+
     const id = random(100, 10000)
-    return Promise.resolve({
-      data: {...payload, id}
-    })
+
+    return Promise.resolve({ data: { ...payload, id } })
   }
 
   if (url === '/users') {
     await delay(1000)
     const id = random(100, 10000)
     const { id: oldId, password, ...rest } = payload
-    return Promise.resolve({
-      data: {id, ...rest}
-    })
+
+    return Promise.resolve({ data: { ...rest, id } })
   }
 }
 

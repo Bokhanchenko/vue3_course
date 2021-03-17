@@ -30,7 +30,7 @@ export default defineComponent({
     const canEdit = post.authorId === parseInt(store.getState().authors.currentUserId!, 10)
 
     if (!canEdit) {
-      return router.push({ name: 'home' })
+      await router.push({ name: 'home' })
     }
 
     return {

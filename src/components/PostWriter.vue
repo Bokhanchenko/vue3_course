@@ -11,7 +11,6 @@
               class="input"
               data-test="post-title"
             />
-            {{ title }}
           </div>
         </div>
       </div>
@@ -32,7 +31,6 @@
         <div v-html="html" />
       </div>
     </div>
-
     <div class="columns">
       <div class="column">
         <button

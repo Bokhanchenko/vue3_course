@@ -10,26 +10,27 @@ export const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      name: 'home',
       path: '/',
+      name: 'home',
       component: HomePage
     },
     {
-      name: 'post',
-      path: '/posts/:id',
-      component: ShowPostPage
-    },
-    {
-      name: 'post.new',
       path: '/posts/new',
+      name: 'post.new',
       component: NewPostPage,
       meta: {
         requiresAuth: true
       }
     },
     {
-      name: 'post.edit',
+      path: '/posts/:id',
+      name: 'post',
+      component: ShowPostPage
+    },
+
+    {
       path: '/posts/:id/edit',
+      name: 'post.edit',
       component: EditPostPage,
       meta: {
         requiresAuth: true
