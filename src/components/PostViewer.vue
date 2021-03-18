@@ -1,5 +1,6 @@
 <template>
   <router-link
+    data-test="can-edit"
     v-if="canEdit"
     :to="{ name: 'post.edit', params: { id: post.id }}"
     class="button is-rounded is-link"

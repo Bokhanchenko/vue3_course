@@ -6,38 +6,42 @@ import EditPostPage from '../EditPostPage.vue'
 import ShowPostPage from '../ShowPostPage.vue'
 import { store } from './store'
 
-export const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomePage
-    },
-    {
-      path: '/posts/new',
-      name: 'post.new',
-      component: NewPostPage,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/posts/:id',
-      name: 'post',
-      component: ShowPostPage
-    },
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomePage
+  },
+  {
+    path: '/posts/new',
+    name: 'post.new',
+    component: NewPostPage,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/posts/:id',
+    name: 'post',
+    component: ShowPostPage
+  },
 
-    {
-      path: '/posts/:id/edit',
-      name: 'post.edit',
-      component: EditPostPage,
-      meta: {
-        requiresAuth: true
-      }
-    },
-  ]
+  {
+    path: '/posts/:id/edit',
+    name: 'post.edit',
+    component: EditPostPage,
+    meta: {
+      requiresAuth: true
+    }
+  },
+];
+
+export const makeRouter = () => createRouter({
+  history: createWebHistory(),
+  routes
 })
+
+export const router = makeRouter();
 
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !store.getState().authors.currentUserId) {
