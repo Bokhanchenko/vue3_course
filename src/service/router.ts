@@ -37,7 +37,8 @@ const routes = [
 ];
 
 export const makeRouter = () => createRouter({
-  history: createWebHistory(),
+  // it for github page
+  history: createWebHistory(process.env.NODE_ENV === 'production' ? 'vue3_course' : ''),
   routes
 })
 
