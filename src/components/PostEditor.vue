@@ -1,20 +1,21 @@
 <template>
-  <div>
-    Post Editor
-
-    <router-link :to="{ name: 'post.edit', params: { id: post.id } }">
-      Post
-    </router-link>
-  </div>
+  <PostWriter :post="post" @save="save" />
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useStore } from "../service/store";
+import { defineComponent } from "vue"
+import { useRoute, useRouter } from "vue-router"
+import { useStore } from "../service/store"
+import { Post } from '../service/types'
+
+import PostWriter from './PostWriter.vue'
 
 export default defineComponent({
   name: 'PostEditor',
+
+  components: {
+    PostWriter
+  },
 
   async setup() {
     const route = useRoute()
@@ -35,6 +36,10 @@ export default defineComponent({
 
     return {
       post,
+      async save (_post) {
+        await store.updatePost(_post)
+        return router.push({ name: 'home' })
+      }
     }
   }
 })

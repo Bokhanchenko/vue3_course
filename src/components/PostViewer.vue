@@ -1,14 +1,23 @@
 <template>
-  <router-link
-    data-test="can-edit"
-    v-if="canEdit"
-    :to="{ name: 'post.edit', params: { id: post.id }}"
-    class="button is-rounded is-link"
-  >
-    <i class="fas fa-edit" />
-  </router-link>
+  <div class="columns">
+    <div class="column"></div>
 
-  <div>Post title is: {{ post.title }}</div>
+    <div class="column is-two-thirds">
+      <router-link
+        data-test="can-edit"
+        v-if="canEdit"
+        :to="{ name: 'post.edit', params: { id: post.id }}"
+        class="button is-rounded is-link is-pules-right"
+      >
+        <i class="fas fa-edit" />
+      </router-link>
+
+      <h1>Post title is: {{ post.title }}</h1>
+      <div v-html="post.html" />
+    </div>
+
+    <div class="column"></div>
+  </div>
 </template>
 
 <script lang="ts">

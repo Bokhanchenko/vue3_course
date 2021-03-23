@@ -1,9 +1,15 @@
 <template>
+  <div class="message is-primary is-marginless">
+    <div class="message-header">
+      <p>Posts</p>
+    </div>
+  </div>
+
   <nav class="is-primary panel">
     <p class="panel-tabs">
       <a v-for="period in periods" :key="period" data-test="period"
-        :class="[ period === selectedPeriod ? 'is-active' : '']"
-        @click="setPeriod(period)"
+         :class="[ period === selectedPeriod ? 'is-active' : '']"
+         @click="setPeriod(period)"
       >
         {{ period }}
       </a>

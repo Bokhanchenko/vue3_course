@@ -15,6 +15,16 @@ const createHome = () => {
     global: {
       provide: {
         store: createStore()
+      },
+      // stubs: {
+      //   TimeLinePost: {
+      //     template: '<div />'
+      //   }
+      // }
+      components: {
+        RouterLink: {
+          template: '<div />'
+        }
       }
     }
   })
